@@ -10,6 +10,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]float jumpForce = 600f;
     [SerializeField]float walkForce = 30f;
     [SerializeField]float maxWalkSpeed = 2.0f;
+    [SerializeField] AudioClip birdSE;
+    [SerializeField] Sprite[] jumpSprites1;
+    float time = 0;
+    int idx = 0;
+    SpriteRenderer spriteRenderer;
 
     public Transform startPoint;
 
@@ -18,6 +23,8 @@ public class PlayerController : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         this.rigid2D = GetComponent<Rigidbody2D>();
+        gameObject.GetComponent<AudioSource>().clip = birdSE;
+        this.spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -26,11 +33,21 @@ public class PlayerController : MonoBehaviour
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             this.rigid2D.AddForce(transform.up * this.jumpForce);
+            gameObject.GetComponent<AudioSource>().Play();
         }
 
         if (this.rigid2D.linearVelocityX < this.maxWalkSpeed)
         {
             this.rigid2D.AddForce(transform.right * walkForce);
+        }
+
+        // アニメーション
+        this.time += Time.deltaTime;
+        if (this.time > 0.1)
+        {
+            this.time = 0;
+            this.spriteRenderer.sprite = this.jumpSprites1[this.idx];
+            this.idx = 1 - this.idx;
         }
 
         // 画面外に出た場合は最初から
@@ -47,6 +64,8 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("GameScene");
         }
+
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
