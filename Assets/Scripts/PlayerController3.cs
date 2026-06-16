@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController3 : MonoBehaviour
 {
     Rigidbody2D rigid2D;
-    [SerializeField]float jumpForce = 600f;
-    [SerializeField]float walkForce = 30f;
-    [SerializeField]float maxWalkSpeed = 2.0f;
+    [SerializeField] float jumpForce = 600f;
+    [SerializeField] float walkForce = 30f;
+    [SerializeField] float maxWalkSpeed = 2.0f;
     [SerializeField] AudioClip birdSE;
     [SerializeField] Sprite[] jumpSprites1;
     float time = 0;
@@ -65,14 +65,14 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene("GameScene");
         }
 
-        
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         {
             Debug.Log("ÉSÅ[Éã");
-            SceneManager.LoadScene("GameScene2");
+            SceneManager.LoadScene("ClearScene");
         }
     }
 
